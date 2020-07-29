@@ -1,0 +1,6 @@
+# PHP
+cgi-bin/
+error_log
+
+# Secure Files
+mysql.config.php
