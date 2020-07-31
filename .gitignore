@@ -1,3 +1,6 @@
+# Mac OSX
+.DS_Store
+
 # PHP
 cgi-bin/
 error_log
