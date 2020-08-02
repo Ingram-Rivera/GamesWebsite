@@ -1,0 +1,12 @@
+body {
+    background-color: brown;
+    padding: 60px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: courier;
+    text-align: right;
+    color: #00FFFF;
+}

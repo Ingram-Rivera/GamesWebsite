@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+  <style>
+    h1 {
+      color: aqua;
+      text-align: right;
+      font-family: courier;
+    }
+
+
+
+    body {
+      padding: 60px;
+      text-align: center;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="utf-8" />
+
+
+
+</head>
+
+
+
+<body style="background-color:brown;">
+
+
+
+  <h1 style="font-size: 40px">MINESWEEPER</h1>
+  <script src="libraries/p5.dom.js"></script>
+  <script src="sketch.js"></script>
+  <script src="square.js"></script>
+  <form action=“” method=“POST>
+    <input type=“text” name=“first_name” Placeholder=“First Name”>
+    <br>
+    <input type=“text” name=“last_name” Placeholder=“Last Name”>
+    <br>
+    <input type=“text” name=“user_Lid” Placeholder=“Username”>
+    <br>
+    <input type=“text” name=“user_pwd” Placeholder=“password”>
+    <br>
+    <button type=“submit” name=“submit”> Sign Up </button>
+
+
+
+    <script>
+    function rectangle(a, b, z) {
+    this.a = a;
+    this.b = b;
+    this.x = a * z;
+    this.y = b * z;
+    this.z = z;
+    this.countOthers= 0;
+    this.bomb = false;
+    this.shows = false;
+}
+
+
+
+rectangle.prototype.display = function(){
+ stroke(0);
+  noFill();
+
+
+
+  rect(this.x, this.y, this.z, this.z);
+  if(this.shows) {
+    if (this.bomb){
+
+      fill(200, 30, 20);
+      circle(this.x + this.z * 0.5, this.y + this.z * 0.5, this.z * 0.5);
+
+
+
+    } else {
+      fill(87);
+
+      rect(this.x, this.y, this.z, this.z);
+      textAlign(CENTER);
+      fill(0);
+      text(this.countOthers, this.x + this.z * 0.5, this.y + this.z - 6);
+
+
+    }
+
+  }
+
+
+
+}
+
+
+
+rectangle.prototype.whatIsAround = function() {
+  if (this.bomb) {
+    this.countOthers = -1
+    return;
+  }
+  var total = 0;
+  for (var t = -1; t <= 1; t++){
+    for (var u = -1; u <= 1; u++) {
+      var a = this.a + t;
+      var b = this.b + u;
+      if (a > - 1 && a < colm && b > -1 && b < rows){
+      var countOtherRec = grid[a][b];
+      if (countOtherRec.bomb){
+      total++;
+      }
+      }
+    }
+  }
+
+
+
+
+    this.countOthers = total;
+}
+
+
+
+rectangle.prototype.whatsInsideRect = function(x, y) {
+ return (x > this.x && x < this.x + this.z && y > this.y && y < this.y + this.z);
+
+
+}
+rectangle.prototype.displayTwo = function(x, y) {
+this.shows = true;
+  if(this.countOthers == 0) {
+    this.fillAround();
+  }
+}
+
+
+
+rectangle.prototype.fillAround = function (){
+
+
+
+ for (var t = -1; t <= 1; t++){
+    for (var u = -1; u <= 1; u++) {
+      var a = this.a + t;
+      var b = this.b + u;
+      if (a > - 1 && a < colm && b > -1 && b < rows){
+       var countOtherRec = grid[a][b];
+       if (!countOtherRec.bomb && !countOtherRec.shows){
+         countOtherRec.displayTwo();
+      }
+    }
+
+
+
+  }
+}
+}
+
+
+
+      function TwoDArray(colm, rows) {
+  var array = new Array(colm);
+  for (var a = 0; a < array.length; a++) {
+    array[a] = new Array(rows);
+
+
+
+  }
+
+
+
+  return array;
+
+
+
+}
+
+
+
+
+
+var myScore = 0;
+var z = 20;
+var rows;
+var colm;
+var totalBombs = 30
+var gameStatus = false;
+
+
+
+
+
+
+function setup() {
+  createCanvas(300, 300);
+  colm = floor(width / z);
+  rows = floor(height / z);
+  grid = TwoDArray(colm, rows);
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b] = new rectangle(a, b, z);
+      resetGame();
+
+
+
+
+    }
+  }
+
+
+
+  // function buttonSetup(){//
+  // createCanvas(100,100);//
+  button = createButton("Play");
+  //button.position(19,19);//
+  button.mousePressed(resetGame);
+
+
+
+
+
+  var options = [];
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      options.push([a, b]);
+    }
+  }
+
+
+
+
+  for (var m = 0; m < totalBombs; m++) {
+    var index = floor(random(options.length));
+    var choice = options[index];
+    var a = choice[0];
+    var b = choice[1];
+
+
+
+    options.splice(index, 1);
+    grid[a][b].bomb = true;
+
+
+
+  }
+
+
+
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b].whatIsAround();
+    }
+
+
+
+  }
+}
+
+
+
+function gameOver() {
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b].shows = true;
+
+
+
+
+    }
+  }
+
+
+
+}
+
+
+
+function mousePressed() {
+  background(100);
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      if (grid[a][b].whatsInsideRect(mouseX, mouseY)) {
+        grid[a][b].displayTwo()
+        myScore++;
+
+
+
+
+
+
+        if (grid[a][b].bomb) {
+          myScore = (myScore) - 1;
+          gameOver();
+          gameStatus = true;
+          showScore();
+
+
+
+
+        }
+      }
+    }
+  }
+}
+
+
+
+
+function draw() {
+  background(50);
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b].display();
+    }
+  }
+
+
+
+}
+
+
+
+function showScore() {
+
+
+
+  if (gameStatus == true) {
+    alert('GAMEOVER! Your FINAL score is: ' + myScore);
+  }
+
+
+
+}
+
+
+
+function resetGame() {
+
+
+
+  resetScore()
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b] = new rectangle(a, b, z);
+
+
+
+
+    }
+    //var button = createButton("Play");//
+    // button.mousePressed(resetGame);//
+  }
+
+
+
+  var options = [];
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      options.push([a, b]);
+    }
+  }
+
+
+
+
+  for (var m = 0; m < totalBombs; m++) {
+    var index = floor(random(options.length));
+    var choice = options[index];
+    var a = choice[0];
+    var b = choice[1];
+
+
+
+    options.splice(index, 1);
+    grid[a][b].bomb = true;
+
+
+
+  }
+
+
+
+  for (var a = 0; a < colm; a++) {
+    for (var b = 0; b < rows; b++) {
+      grid[a][b].whatIsAround();
+    }
+  }
+
+
+
+  function resetScore() {
+    if (myScore > 0) {}
+    myScore = 0
+
+
+
+  }
+}
+// function buttonSetup(){//
+// createCanvas(100,100);//
+// button = createButton("Play");//
+//button.position(19,19);//
+//   button.mousePressed(resetGame);//
+    </script>
+
+
+
+    <form>
+
+
+
+
+</body>
+
+
+
+</html>
