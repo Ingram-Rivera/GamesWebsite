@@ -1,0 +1,40 @@
+#game {
+    width: 800px;
+    height: 600px;
+    background-color: #000000;
+}
+
+#playerCards, #dealerCards {
+    width: 50%;
+    height: 50%;
+    display: inline-block;
+
+    font-size: 14px;
+    vertical-align: middle;
+
+    color: #FFFFFF;
+}
+
+#playerCards {
+    background-color: #FF0000;
+}
+
+#dealerCards {
+    background-color: #0000FF;
+}
+
+.button {
+    background-color: #FFFFFF;
+}
+
+.buttonHit {
+    color: #008000;
+}
+
+.buttonStand {
+    color: #FF0000;
+}
+
+.buttonSplit {
+    color: #0000FF;
+}
