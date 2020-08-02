@@ -73,7 +73,6 @@ function dealerHit() {
 
 function stand() {
     alert("Player requested to stand.");
-    dealerHit();
 
     // Check if player beat the dealer
     var playerCardValues = cardValue(playerOneCards);
@@ -86,6 +85,10 @@ function stand() {
 
     if(dealerCardValues < playerCardValues) {
         alert("You win, gg!");
+    }
+
+    if(playerCardValues < dealerCardValues){
+        alert("The dealer has won, gg!");
     }
 }
 
