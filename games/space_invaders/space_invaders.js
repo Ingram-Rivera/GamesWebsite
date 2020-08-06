@@ -4,7 +4,9 @@ const scorePerLife = 30_000;
 const gameWidth = 800;
 const gameHeight = 800;
 const backgroundStarCount = 50;
-const bulletCooldownTicks = 5;
+const bulletCooldownTicks = 3;
+const ticksPerSecond = 60;
+const bulletSpeed = 3;
 
 const keyIdLeft = 37;
 const keyIdUp = 38;
@@ -13,7 +15,7 @@ const keyIdDown = 40;
 const keyIdSpace = 32;
 
 const shipColor = "#00FF00";
-const enemyColor = "#FF0000";
+var enemyColor = "#FF0000";
 
 var heldLeft = false;
 var heldUp = false;
@@ -30,7 +32,9 @@ var currentScore = 0;
 var shipCenterPosition = [400, 790];
 var shipBulletPositions = [];
 var nextShipBulletCooldown = 0;
+var enemyBulletCooldown = 0;
 
+var enemySpeed = 1;
 var enemyPositions = [];
 var enemyBulletPositions = [];
 var nextEnemyBulletCooldown = 0;
@@ -43,7 +47,7 @@ function startGame() {
     hideElement("playButton");
     showElement("information");
     
-    gameTaskId = setInterval(gameLoop, 50);
+    gameTaskId = setInterval(gameLoop, 1000 / ticksPerSecond);
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("keyup", onKeyUp);
     
@@ -74,6 +78,9 @@ function gameLoop() {
     
     checkEnemyHitboxes();
     checkShipHitbox();
+
+    checkEnemyCount();
+    triggerRandomEnemyWeapon();
     
     moveEnemies();
     moveBullets();
@@ -180,12 +187,12 @@ function updateInformation() {
 function checkKeys() {
     if(heldLeft) {
         var currentX = shipCenterPosition[0];
-        shipCenterPosition[0] = Math.max(5, currentX - 5);
+        shipCenterPosition[0] = Math.max(5, currentX - 3);
     }
     
     if(heldRight) {
         var currentX = shipCenterPosition[0];
-        shipCenterPosition[0] = Math.min(795, currentX + 5);
+        shipCenterPosition[0] = Math.min(795, currentX + 3);
     }
 
     if(heldSpace) {
@@ -240,22 +247,106 @@ function drawBullets() {
 function drawBullet(position, color) {
     var positionX = position[0];
     var positionY = position[1];
-    drawRectangle(positionX, positionY - 1, 1, 3, color);
+    drawRectangle(positionX - 1, positionY - 1, 3, 3, color);
+}
+
+function checkBulletCollision(enemyPosition, bulletPosition) {
+    var enemyX = enemyPosition[0] - 2;
+    var enemyY = enemyPosition[1] - 2;
+    var enemyWidth = 5;
+    var enemyHeight = 5;
+
+    var bulletX = bulletPosition[0] - 1;
+    var bulletY = bulletPosition[1] - 1;
+    var bulletWidth = 3;
+    var bulletHeight = 3;
+
+    return !(
+        ((enemyY + enemyHeight) < bulletY) ||
+        (enemyY > (bulletY + bulletHeight)) ||
+        ((enemyX + enemyWidth) < bulletX) ||
+        (enemyX > (bulletX + bulletWidth))
+    );
+}
+
+function checkShipCollision(enemyPosition) {
+    var enemyX = enemyPosition[0] - 2;
+    var enemyY = enemyPosition[1] - 2;
+    var enemyWidth = 5;
+    var enemyHeight = 5;
+
+    var shipX = shipCenterPosition[0] - 2;
+    var shipY = shipCenterPosition[1] - 2;
+    var shipWidth = 5;
+    var shipHeight = 5;
+
+    return !(
+        ((enemyY + enemyHeight) < shipY) ||
+        (enemyY > (shipY + shipHeight)) ||
+        ((enemyX + enemyWidth) < shipX) ||
+        (enemyX > (shipX + shipWidth))
+    );
 }
 
 function checkEnemyHitboxes() {
-    
+    var enemyPositionsLength = enemyPositions.length;
+    var newEnemyPositions = [];
+    for(var i = 0; i < enemyPositionsLength; i++) {
+        var enemyPosition = enemyPositions[i];
+        var didCollide = false;
+
+        var shipBulletPositionsLength = shipBulletPositions.length;
+        var newShipBulletPositions = [];
+        for(var j = 0; j < shipBulletPositionsLength; j++) {
+            var shipBulletPosition = shipBulletPositions[j];
+            if(checkBulletCollision(enemyPosition, shipBulletPosition)) {
+                increaseScore(5);
+                didCollide = true;
+                break;
+            }
+
+            newShipBulletPositions.push(shipBulletPosition);
+        }
+        shipBulletPositions = newShipBulletPositions;
+        if(!didCollide) newEnemyPositions.push(enemyPosition);
+    }
+    enemyPositions = newEnemyPositions;
 }
 
 function checkShipHitbox() {
-    
+    var enemyBulletPositionsLength = enemyBulletPositions.length;
+    var newEnemyBulletPositions = [];
+    for(var index = 0; index < enemyBulletPositionsLength; index++) {
+        var enemyBulletPosition = enemyBulletPositions[index];
+        if(checkBulletCollision(shipCenterPosition, enemyBulletPosition)) {
+            increaseScore(-1);
+            currentLives--;
+            break;
+        }
+
+        newEnemyBulletPositions.push(enemyBulletPosition);
+    }
+    enemyBulletPositions = newEnemyBulletPositions;
+
+    var enemyPositionsLength = enemyPositions.length;
+    var newEnemyPositions = [];
+    for(var index = 0; index < enemyPositionsLength; index++) {
+        var enemyPosition = enemyPositions[index];
+        if(checkShipCollision(enemyPosition, shipCenterPosition)) {
+            increaseScore(-1);
+            currentLives--;
+            break;
+        }
+        newEnemyPositions.push(enemyPosition);
+    }
+    enemyPositions = newEnemyPositions;
 }
 
 function moveEnemies() {
     var enemyPositionsLength = enemyPositions.length;
     for(var index = 0; index < enemyPositionsLength; index++) {
         var enemyPosition = enemyPositions[index];
-        enemyPosition[1]++;
+        enemyPosition[1] += enemySpeed;
         
         if(enemyPosition[1] >= 800) {
             enemyPosition[1] = 0;
@@ -265,22 +356,54 @@ function moveEnemies() {
 
 function moveBullets() {
     var shipBulletPositionsLength = shipBulletPositions.length;
+    var newShipBulletPositions = [];
     for(var index = 0; index < shipBulletPositionsLength; index++) {
         var shipBulletPosition = shipBulletPositions[index];
-        shipBulletPosition[1] -= 10;
-        if(shipBulletPosition[1] <= 0) {
-            shipBulletPositions.splice(index, 1);
-        }
+        shipBulletPosition[1] -= bulletSpeed;
+        if(shipBulletPosition[1] <= 0) continue;
+        newShipBulletPositions.push(shipBulletPosition);
     }
+    shipBulletPositions = newShipBulletPositions;
     
     var enemyBulletPositionsLength = enemyBulletPositions.length;
+    var newEnemyBulletPositions = [];
     for(var index = 0; index < enemyBulletPositionsLength; index++) {
         var enemyBulletPosition = enemyBulletPositions[index];
-        enemyBulletPosition[1] += 10;
-        if(enemyBulletPosition[1] >= gameHeight) {
-            enemyBulletPositions.splice(index, 1);
-        }
+        enemyBulletPosition[1] += bulletSpeed;
+        if(enemyBulletPosition[1] >= gameHeight) continue;
+        newEnemyBulletPositions.push(enemyBulletPosition);
     }
+    enemyBulletPositions = newEnemyBulletPositions;
+}
+
+function checkEnemyCount() {
+    if(enemyPositions.length > 0) return;
+    enemySpeed++;
+
+    var randomHex = getRandomInteger(0, 16777215).toString(16);
+    enemyColor = ("#" + randomHex);
+    
+    for(var i = 0; i < 8; i++) {
+        var enemyX = (100 * (i + 1));
+        var enemyY = 100;
+        if(i < 7) enemyPositions.push([enemyX, enemyY]);
+
+        var midEnemyX = (enemyX - 50);
+        var midEnemyY = 200;
+        enemyPositions.push([midEnemyX, midEnemyY]);
+    }
+}
+
+function triggerRandomEnemyWeapon() {
+    if(enemyBulletCooldown > 0) {
+        enemyBulletCooldown--;
+        return;
+    }
+
+    var enemyIndex = getRandomInteger(0, enemyPositions.length);
+    var enemyPosition = enemyPositions[enemyIndex];
+    enemyBulletPositions.push([enemyPosition[0], enemyPosition[1]]);
+    enemyBulletCooldown += ((ticksPerSecond * 2) / enemySpeed);
 }
 
 function gameOver() {
