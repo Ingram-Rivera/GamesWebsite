@@ -302,7 +302,7 @@ function checkEnemyHitboxes() {
             if(checkBulletCollision(enemyPosition, shipBulletPosition)) {
                 increaseScore(5);
                 didCollide = true;
-                break;
+                continue;
             }
 
             newShipBulletPositions.push(shipBulletPosition);
@@ -321,7 +321,7 @@ function checkShipHitbox() {
         if(checkBulletCollision(shipCenterPosition, enemyBulletPosition)) {
             increaseScore(-1);
             currentLives--;
-            break;
+            continue;;
         }
 
         newEnemyBulletPositions.push(enemyBulletPosition);
@@ -335,7 +335,7 @@ function checkShipHitbox() {
         if(checkShipCollision(enemyPosition, shipCenterPosition)) {
             increaseScore(-1);
             currentLives--;
-            break;
+            continue;
         }
         newEnemyPositions.push(enemyPosition);
     }
