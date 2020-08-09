@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Space Invaders</title>
+        <meta charset="UTF-8"/>
+        
+        <link rel="stylesheet" type="text/css" href="/includes/games/space_invaders/space_invaders.css"/>
+        <script src="/includes/games/space_invaders/space_invaders.js"></script>
+    </head>
+    <body>
+        <div id="controls">
+            <h1>Controls</h1>
+            <table align="right">
+                <thead>
+                    <tr>
+                        <th>Button</th>
+                        <th>Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&larr;</td>
+                        <td>Move Left</td>
+                    </tr>
+                    <tr>
+                        <td>&rarr;</td>
+                        <td>Move Right</td>
+                    </tr>
+                    <tr>
+                        <td>Space</td>
+                        <td>Fire Weapon</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="game">
+            <canvas id="spaceInvaders" width="500" height="500"></canvas>
+            <button id="playButton" onclick="startGame();">Play</button>
+            <button id="submitButton" onclick="submitScoreButton();" style="display: none;">Submit Score</button>
+            <div id="information" style="display: none;">
+                <span>Score: </span>
+                <span id="score">0</span>
+                <span>&#124;</span>
+                <span> Lives: </span>
+                <span id="lives">3</span>
+            </div>
+        </div>
+        <div id="help">
+            <h1>Help</h1>
+            <span>Kill the enemies to increase your score.</span><br/>
+            <span>If you touch an enemy or a bullet, you will lose a life.</span><br/>
+            <span>When your lives reach 0, the game will end.</span><br/>
+        </div>
+    </body>
+</html>

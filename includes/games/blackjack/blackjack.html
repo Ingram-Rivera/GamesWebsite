@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blackjack Game</title>
+        <link rel="stylesheet" type="text/css" href="/includes/games/blackjack/blackjack.css"/>
+        <script src="/includes/games/blackjack/blackjack.js" charset="UTF-8"></script>
+    </head>
+    <body">
+        <div id="game">
+            <div id="playerCards">
+                <p id="playerHit"></p>
+                <p id="playerStand"></p>
+                <p id="playerSplit"></p>
+            </div>
+            <div id="dealerCards"></div>
+        </div>
+        <div id="gameOptions">
+            <button type="button" name="hit" class="button buttonHit" onClick="hit()">Hit</button>
+            <button type="button" name="stand" class="button buttonStand" onClick="stand()">Stand</button>
+            <button type="button" name="split" class="button buttonSplut" onClick="split()">Split</button>
+        </div>
+        <script>blackJack();</script>
+    </body>
+</html>
