@@ -91,6 +91,11 @@
                     background-color: rgb(109, 0, 0);
                     color: white;
                 }
+
+                #test{
+                    font-size: 25px;
+                    letter-spacing: 10px;
+                }
             </style>
 
             <script>
@@ -106,6 +111,7 @@
                     console.log("Guess a word");
                     word = cities[getRandomInt(cities.length)];
                     console.log(word);
+                    word = word.replace(/[a-z]/g, '_');
                     if(word != null){
                         document.getElementById("test").innerHTML = word;
                     }
