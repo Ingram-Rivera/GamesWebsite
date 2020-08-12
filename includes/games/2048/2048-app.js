@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				resultView.innerHTML = '2048. You are a Winner!!!';
 				document.removeEventListener('keyup',keyControl);
 				let game_id = 3; // 2048
-				let score = parseInt( document.getElementById('score_goes_here') );
+				let score = parseInt( document.getElementById('score_goes_here').innerHTML );
 				scorePush(game_id,score);
 			}
 		}
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			resultView.innerHTML = 'Sorry. You lost.'
 			document.removeEventListener('keyup',keyControl);
 			let game_id = 3; // 2048
-			let score = parseInt( document.getElementById('score_goes_here') );
+			let score = parseInt( document.getElementById('score_goes_here').innerHTML );
 			scorePush(game_id,score);
 		}
 	}
