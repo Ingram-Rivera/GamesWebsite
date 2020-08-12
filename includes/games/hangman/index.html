@@ -6,6 +6,10 @@
                     Play hangman!
                 </button>
             </div>
+
+            <div class="displayWord">
+                <p id="test"></p>
+            </div>
             
             <div class="btn-group">
                 <button>a</button>
@@ -102,6 +106,9 @@
                     console.log("Guess a word");
                     word = cities[getRandomInt(cities.length)];
                     console.log(word);
+                    if(word != null){
+                        document.getElementById("test").innerHTML = word;
+                    }
                 }
                 function displayHint(){
                     alert("Your category is: " );
