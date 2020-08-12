@@ -2,8 +2,11 @@
 $(document).ready(function () {
     console.log('document ready')
     $('board_container').html(renderCboard())
+    $(`.white.cell`).click(moveSelectedManHere)
     rendermen()
     $('.man').click(selectman)
+    
+
     
 })
 // function to render the chestboard
@@ -36,12 +39,12 @@ function renderRow(rowNum){
 }
 // function to renders the cell to return the by cell color 
 function renderCell(rowNum, cellNum){
-if (cellColor(cellNum,rowNum) === 'black'){
+if (cellColor(cellNum,rowNum) === 'white'){
     return`
-    <div id ="cell-${rowNum}-${cellNum}" class= "cell white">
+    <div id ="cell-${rowNum}-${cellNum}" class= "cell black">
     </div>`
 }else
-return `<div id ="cell-${rowNum}-${cellNum}" class="cell black"></div>`
+return `<div id ="cell-${rowNum}-${cellNum}" class="cell white"></div>`
 }
 
 // function to switch pieces in the chestboard
@@ -62,4 +65,7 @@ function switchColor(man){
         man.addClass('grey_man')
         man.removeClass('black_man')
     }
+}
+function clearBoard(){
+    $('.white.cell').html('')
 }
