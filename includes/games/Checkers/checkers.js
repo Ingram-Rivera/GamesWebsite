@@ -36,12 +36,13 @@ function rendermen(){
         let man = men[i];
         console.log(man)
         $(`#cell-${man.row}-${man.cell}`).html(renderman(i, man.color))
+        $(`#cell-${man.row}-${man.cell}`).click(undefined)
     }
     }
     
 // function to render each piece (man)
 function renderman(i, color){
-    return`<div id="man-${i}" class="man ${color}-man"></div>`
+    return`<div class ="man-wrapper"><div id="man-${i}" class="man ${color}-man"></div></div>`
 }
 
 // function to select the each man
@@ -61,7 +62,7 @@ function renderman(i, color){
         selectedman = men[manIndex]
         console.log(`finished selecting man:` , selectedman)
         
-        man.parent().addClass(`selected`)
+        man.addClass(`selected`)
         }
 
 // function to uniform the pieces 
@@ -71,4 +72,15 @@ function parity(num){
 // function to separe and uniform the cell by color
 function cellColor(cellNum,rowNum){
     return parity(cellNum)== parity(rowNum) ? 'white' :'black'
+}
+function moveSelectedManHere(){
+    console.log('things')
+    if (selectedman){
+        console.log(`moveSelectedMan`)
+        selectedman.row =4
+        selectedman.cell = 1
+        rendermen()
+    }else{
+        console.log(`select a man fool`)
+    }
 }
