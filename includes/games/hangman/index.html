@@ -1,6 +1,7 @@
 <!DOCTYPE html>
     <html>
         <body>
+
             <div class="GameStart">
                 <button onclick="hangman()">
                     Play hangman!
@@ -47,6 +48,15 @@
               </div>
 
             <style>
+
+                body{
+                    background-color: rgb(73, 73, 73);
+                }
+
+                .displayWord{
+                    color: white;
+                }
+
                 .btn-group button {
                 background-color: #4CAF50;
                 border: 1px solid green;
@@ -96,13 +106,17 @@
                     font-size: 25px;
                     letter-spacing: 10px;
                 }
+
             </style>
 
             <script>
+
                 var cities = ["phoenix", "austin", "seattle", "orlando", "boston", "jackson", "salem", "montgomery", "springfield", "albany", "raleigh", "madison", "nashville", "lincoln"];
                 var categories;
                 var lives = 7;
                 var word;
+                var guess;
+
                 function getRandomInt(max){
                     return Math.floor(Math.random() * Math.floor(max));
                 }
@@ -115,10 +129,15 @@
                     if(word != null){
                         document.getElementById("test").innerHTML = word;
                     }
+                    /* if(guess = word[i]){
+
+                    } */
                 }
+
                 function displayHint(){
                     alert("Your category is: " );
                 }
+
             </script>
         </body>
     </html>
