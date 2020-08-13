@@ -25,3 +25,4 @@ class Database extends PDO
       return($result);
     }
 }
+?>

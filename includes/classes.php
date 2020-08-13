@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class Gamer {
     private $pdo;
  	private $id;
@@ -8,6 +9,7 @@ class Gamer {
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo;
     }
+
     public function create($username) {
         $sql = "INSERT INTO `uat_game_app`.`gamer` (`gamer_name`) VALUES (:username)";
         $stmt = $this->pdo->prepare($sql);
@@ -15,6 +17,7 @@ class Gamer {
         $stmt->execute();
         return $stmt->rowCount();
     }
+
 	function load_game_scores() {
 		return $games_played;
 	}
@@ -31,7 +34,6 @@ class Games {
     function play_game($game_name) {}
     function record_score($game_name) {}
     function quit_game($game_name) {}
-
 }
 
 class Scores {
@@ -58,6 +60,7 @@ class Scores {
         $db = null;
         return $gamerID;
     }
+
     public function submitScore($gamer_id,$game_id,$score) {
         $db = new Database();
         $sql="insert into scores(user_id,game_id,score) value(" . $gamer_id . "," . $game_id ."," . $score . ")";
@@ -65,5 +68,5 @@ class Scores {
         $lastinsertid=$db->lastInsertId();
         $db = null;
     }
-
 }
+?>

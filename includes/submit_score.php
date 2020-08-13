@@ -10,9 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		$scores = new Scores();
 		$results = $scores->selectUser($name);
 		$gamer_id = $results;
-		$scores->submitScore($gamer_id,$game_id,$score);
+		$scores->submitScore($gamer_id, $game_id, $score);
 	}
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$name = $_POST['username'];
 	$game_id = $_POST['game_id'];
@@ -21,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$scores = new Scores();
 		$results = $scores->selectUser($name);
 		$gamer_id = $results;
-		$scores->submitScore($gamer_id,$game_id,$score);
+		$scores->submitScore($gamer_id, $game_id, $score);
 	}
 }
+?>

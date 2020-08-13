@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		$username->create($name);
 	}
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$name = $_POST['username'];
 	if (!empty($name)) {
@@ -19,3 +20,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		setcookie('player',$_POST['username'],time() + (86400 * 30), "/");
 	}
 }
+?>
