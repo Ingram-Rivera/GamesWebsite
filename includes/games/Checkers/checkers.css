@@ -1,68 +1,65 @@
-
-#h1 {
-    display: flex;
+body{
+    text-align: center;
+}
+h1{
+    display: flexbox;
+    position: center;
     
 }
-
-#board_container {
+/*styling for the checker board*/
+#board_container{
     display: inline-block;
+    position: center;
     padding: 25px;
     border: 5px solid grey;
     margin: 25px;
 }
-
-/*styling for the rows on the board*/
-.row{
-    display: flex;
-    justify-content: space-evenly;
-    border: 1px solid black;
-    width: 800px;
-    height: 800;
-}
-/*styling for the cell on the board*/
-.cell{
-    /*border:1px solid blue;*/
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    margin:0px;
-}
-/*color for the black panel*/
-.black{
-    background-color: black;
-}
-/*color for the white panel*/
-.white{
-    background-color: white;
-}
-/*styling the checkers pieces called "man"*/
-.man{
-    margin: 10px;
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
-    
-}
-/*styling the black pieces "man"*/
-.black-man {
-    background-color: #000000;
-}
-
-/*styling the grey pieces "man"*/
-.grey-man {
-    background-color: #888888;
-}
-
-/*styling the selector on click*/
-.selected{
-    border-radius: 1px;
-    color: #255784;
-    background: #2196f3;
-    box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
-
-}
-/*.man-wrapper{
-    height: 50%;
-    width: 50%;
-}
-    
+        /*styling for the rows on the board*/
+        .row{
+            display: flex;
+            justify-content: space-evenly;
+            border: 1px solid black;
+            width: 800px;
+            height: 800;
+        }
+        /*styling for the cell on the board*/
+        .cell{
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            margin:0px;
+        }
+        /*color for the black panel*/
+        .black{
+            background-color: black;
+        }
+        /*color for the white panel*/
+        .white{
+            background-color: white;
+        }
+        /*styling the checkers pieces called "man"*/
+        .man{
+            margin: 10px;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            
+        }
+        /*styling the black pieces "man"*/
+        .black-man{
+            background-color: black;
+           
+        }
+        /*styling the grey pieces "man"*/
+        .grey-man{
+            background-color: grey;
+        }
+        /*styling the selector on click*/
+        .selected{
+            border:0.10vw;
+            margin: 10;
+            color: #255784;
+            box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+        
+        }
+        
