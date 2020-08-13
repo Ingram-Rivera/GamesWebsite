@@ -2,11 +2,7 @@
 $(document).ready(function () {
     console.log('document ready')
     $('board_container').html(renderCboard())
-    $(`.white.cell`).click(moveSelectedManHere)
     rendermen()
-    $('.man').click(selectman)
-    
-
     
 })
 // function to render the chestboard
@@ -47,25 +43,8 @@ if (cellColor(cellNum,rowNum) === 'white'){
 return `<div id ="cell-${rowNum}-${cellNum}" class="cell white"></div>`
 }
 
-// function to switch pieces in the chestboard
-function toggle(){
-    let man =$(this).children().first()
-    man.toggle()
-    if (!man.is(":visible")){
-        switchColor(man);
-    }
-
-}
-// function to switch the color of the man to make appear like is moving
-function switchColor(man){
-    if (man.hasclass('black_man')){
-        man.removeClass('black_man')
-        man.addClass('grey_man')
-    }else{
-        man.addClass('grey_man')
-        man.removeClass('black_man')
-    }
-}
 function clearBoard(){
     $('.white.cell').html('')
+    $(`.white.cell`).unbind('click')
+    $(`.out-play`).html('')
 }
