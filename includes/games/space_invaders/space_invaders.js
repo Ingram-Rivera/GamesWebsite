@@ -412,6 +412,42 @@ function gameOver() {
     alert("Game Over!");
 }
 
+function getCookie(cookieName) {
+    var name = (cookieName + "=");
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieArray = decodedCookie.split(";");
+
+    for(var i = 0; i < cookieArray.length; i++) {
+        var cookie = cookieArray[i];
+        while(cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1);
+        }
+
+        if(cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+
+    return "";
+}
+
 function submitScoreButton() {
-    alert("Score submission is currently disabled.\nSorry for the inconvenience.");
+    var playerName = getCookie("player");
+    var gameId = 4;
+    $.ajax({
+        type: "POST",
+        url: "/includes/submit_score.php",
+        data: ("username=" + playerName + "&game_id=" + gameId + "&score=" + currentScore),
+        success: onScoreSubmitSuccess,
+        failure: onScoreSubmitFailure
+    });
+}
+
+function onScoreSubmitSuccess(data) {
+    alert("Your score was successfully sent!");
+    location.reload();
+}
+
+function onScoreSubmitFailure(data) {
+    alert("Score Push Failure\n\nPlease send the following error to the site administrator:\n\n" + data);
 }

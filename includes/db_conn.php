@@ -17,6 +17,7 @@ class Database extends PDO
         );
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
+    
     public function query($query)
     {
       $result = parent::query($query);
