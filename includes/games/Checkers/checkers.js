@@ -1,134 +1,167 @@
-// variable for the selected man piece
-var selectedman = undefined
-// array to specific the man potition in the cells
+function generateBoard() {
+    var boardContainer = document.getElementById("board_container");
+    for(var row = 1; row <= 8; row++) {
+        var rowId = ("row-" + row);
+        var rowElement = generateRow(boardContainer, rowId);
 
-  var men = [
-    {row:8, cell:2, color: 'grey'},
-    {row:8, cell:4, color: 'grey'},
-    {row:8, cell:6, color: 'grey'},
-    {row:8, cell:8, color: 'grey'},
-    {row:7, cell:1, color: 'grey'},
-    {row:7, cell:3, color: 'grey'},
-    {row:7, cell:5, color: 'grey'},
-    {row:7, cell:7, color: 'grey'},
-    {row:6, cell:2, color: 'grey'},
-    {row:6, cell:4, color: 'grey'},
-    {row:6, cell:6, color: 'grey'},
-    {row:6, cell:8, color: 'grey'},
-    {row:3, cell: 1, color: 'black'},
-    {row:3, cell: 3, color: 'black'},
-    {row:3, cell: 5, color: 'black'},
-    {row:3, cell: 7, color: 'black'},
-    {row:2, cell: 2, color: 'black'},
-    {row:2, cell: 4, color: 'black'},
-    {row:2, cell: 6, color: 'black'},
-    {row:2, cell: 8, color: 'black'},
-    {row:1, cell: 1, color: 'black'},
-    {row:1, cell: 3, color: 'black'},
-    {row:1, cell: 5, color: 'black'},
-    {row:1, cell: 7, color: 'black'},
-    
-]
+        for(var column = 1; column <= 8; column++) {
+            var cellId = ("cell-" + row + "-" + column);
+            var cellElement = generateCell(rowElement, cellId);
 
-//function to render the potition of the men
-function rendermen(){
-    console.log('rendering men')
-    clearBoard()
-    $(`.white.cell`).click(moveSelectedManHere)
-    for ( let i=0; i<men.length; i++){
-        let man = men[i];
-        console.log(man)
-        if(man.row && man.cell){
-        $(`#cell-${man.row}-${man.cell}`).html(renderman(i, man.color))
-        $(`#cell-${man.row}-${man.cell}`).unbind('click')
-    }else {
-        console.log(`put`, man, `into out of play`)
-        $(`#out-play-${man.color}`).append(`<div class= "cell">${renderman(i, man.color)}</div>`)
+            var cellClass = ("cell " + (isWhite(row, column) ? "white" : "black"));
+            cellElement.setAttribute("class", cellClass);
+        
+            if(row < 4 && isWhite(row, column)) {
+                var blackCheckerElement = document.createElement("div");
+                blackCheckerElement.setAttribute("class", "man black-man king-man");
+                cellElement.appendChild(blackCheckerElement);
+            }
+        
+            if(row > 5 && isWhite(row, column)) {
+                var greyCheckerElement = document.createElement("div");
+                greyCheckerElement.setAttribute("class", "man grey-man king-man");
+                cellElement.appendChild(greyCheckerElement);
+            }
+        }
     }
 }
 
-    $('.man').click(selectman)
-}
-    
-// function to render each piece (man)
-function renderman(i, color){
-    if (men[i].isKing){
-
-    return `<div id="man-${i}" class="man ${color}-man">
-    <img src="Images\Black Checker Symbol.png" style= "with:100%; height: 100%"
-    </div>`
-    
-}else
-return  `<div id="man-${i}" class="man ${color}-man"></div>`
+// If a number divided by 2 has no remainder, the number is even
+function isEven(number) {
+    return ((number % 2) == 0);
 }
 
-// function to select the each man
-    function selectman(){
-        let man = $(this)
-        if(man.hasClass(`selected`)){
-            console.log(`this mas already selected`)
-            remove()
-            return
-        }
-        $(`.selected`).removeClass(`selected`)
-        
-        let id = man.attr('id')
-        console.log('selecting man:' , man)
-        console.log (`the id of man is ${id}`)
+// If a number divided by 2 has a remainder, the number is odd
+function isOdd(number) {
+    return ((number % 2) != 0);
+}
 
-        let stringParts = id.split('-')
-        console.log(`string =`, stringParts)
-        
-        let manIndex= stringParts[1]
-        console.log('manIndex==', manIndex)
-       
-        selectedman = men[manIndex]
-        console.log(`finished selecting man:` , selectedman)
-        
-        man.addClass(`selected`)
-        }
-    function remove(){
-            console.log(`removing this...`, selectedman)
-            selectedman.row= undefined
-            selectedman.cell= undefined
-            selectedman = undefined
-            rendermen()
-            
+// A cell will be white if one of these 2 conditions is met:
+// - row and column are both even
+// - row and column are both odd
+function isWhite(row, column) {
+    var bothEven = (isEven(row) && isEven(column));
+    var bothOdd = (isOdd(row) && isOdd(column));
+    return (bothEven || bothOdd);
+}
+
+// This function creates a row for the board
+function generateRow(boardContainer, rowId) {
+    var rowElement = document.createElement("div");
+    rowElement.setAttribute("id", rowId);
+    rowElement.setAttribute("class", "row");
+
+    boardContainer.appendChild(rowElement);
+    return rowElement;
+}
+
+function generateCell(rowElement, cellId) {
+    var cellElement = document.createElement("div");
+    cellElement.setAttribute("id", cellId);
+
+    rowElement.appendChild(cellElement);
+    return cellElement;
+}
+
+function enableClicking() {
+    var manArray = document.getElementsByClassName("man");
+    for(var i = 0; i < manArray.length; i++) {
+        var man = manArray[i];
+        man.addEventListener("click", onClickMan);
     }
-        
 
-// function to uniform the pieces 
-function parity(num){
-    return(num %2 ==0) ? 'odd': 'even'
-}
-// function to separe and uniform the cell by color
-function cellColor(cellNum,rowNum){
-    return parity(cellNum)== parity(rowNum) ? 'white' :'black'
-}
-//Funtion to move the selected man
-function moveSelectedManHere(){
-    console.log('things')
-    if (selectedman){
-        console.log(`move man here`)
-        let whiteCell = $(this)
-        let id = whiteCell.attr('id')
-        console.log(`id:`, id)
-        console.log(`white cell:`, whiteCell)
-        let idParts = id.split('-')
-        console.log(`idParts =`, idParts)
-
-        selectedman.row= idParts[1]
-        selectedman.cell=idParts[2]
-        
-
-        console.log(` the man Im moving is`, selectedman.color)
-        if (selectedman.color ==`grey` && selectedman.row == 1) {
-            console.log(`Im moving a grey man to the white home row`)
-            selectedman.isKing = true
-        }
-        selectedman=undefined
-        rendermen()
-    }else{
-        console.log(`select a man invalid`)
+    var cellArray = document.getElementsByClassName("cell");
+    for(var i = 0; i < cellArray.length; i++) {
+        var cell = cellArray[i];
+        cell.addEventListener("click", onClickCell);
     }
+}
+
+// True if grey should move, false if black should move
+var greyTurn = true;
+var selectedPiece = undefined;
+
+function onClickMan(event) {
+    var manDiv = event.target;
+    var manDivGrey = manDiv.classList.contains("grey-man");
+    if(manDivGrey != greyTurn) return;
+
+    var manCell = manDiv.parentElement;
+    var manCellId = manCell.getAttribute("id");
+    var manCellIdSplit = manCellId.split("-");
+
+    var currentRow = parseInt(manCellIdSplit[1]);
+    var currentColumn = parseInt(manCellIdSplit[2]);
+    onSelectPiece(manDiv);
+}
+
+function onClickCell(event) {
+
+}
+
+function onSelectPiece(element) {
+    if(selectedPiece != null) {
+        var oldSelectedPiece = selectedPiece;
+        selectedPiece = undefined;
+        oldSelectedPiece.classList.remove("selected");
+        if(oldSelectedPiece.getAttribute("id") == element.getAttribute("id")) {
+            hidePossibleMoves();
+            return;
+        }
+    }
+
+    element.classList.add("selected");
+    selectedPiece = element;
+    showPossibleMoves();
+}
+
+function showPossibleMoves() {
+    var cellElement = selectedPiece.parentElement;
+    var cellId = cellElement.getAttribute("id");
+    var cellIdSplit = cellId.split("-");
+
+    var currentRow = parseInt(cellIdSplit[1]);
+    var currentColumn = parseInt(cellIdSplit[2]);
+
+    if(greyTurn) {
+        if(isKing(selectedPiece)) {
+
+        }
+
+        if(currentRow == 6) {
+
+        }
+    } else {
+
+    }
+}
+
+function hidePossibleMoves() {
+
+}
+
+function hasMan(cellId) {
+    var cellElement = document.getElementsById(cellId);
+    for(var i = 0; i < cellElement.children.length; i++) {
+        var child = cellElement.children[i];
+        if(child.classList.contains("man")) return true;
+    }
+    return false;
+}
+
+function getMan(cellId) {
+    var cellElement = document.getElementsById(cellId);
+    for(var i = 0; i < cellElement.children.length; i++) {
+        var child = cellElement.children[i];
+        if(child.classList.contains("man")) return child;
+    }
+    return null;
+}
+
+function isEnemy(manElement) {
+    return manElement.classList.contains(greyTurn ? "black-man" : "grey-man");
+}
+
+function isKing(manElement) {
+    return manElement.classList.contains("king-man");
 }
