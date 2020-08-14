@@ -13,13 +13,13 @@ function generateBoard() {
         
             if(row < 4 && isWhite(row, column)) {
                 var blackCheckerElement = document.createElement("div");
-                blackCheckerElement.setAttribute("class", "man black-man king-man");
+                blackCheckerElement.setAttribute("class", "man black-man");
                 cellElement.appendChild(blackCheckerElement);
             }
         
             if(row > 5 && isWhite(row, column)) {
                 var greyCheckerElement = document.createElement("div");
-                greyCheckerElement.setAttribute("class", "man grey-man king-man");
+                greyCheckerElement.setAttribute("class", "man grey-man");
                 cellElement.appendChild(greyCheckerElement);
             }
         }
@@ -136,10 +136,14 @@ function onClickCell(event) {
         selectedPiece.parentElement.removeChild(selectedPiece);
         cellElement.appendChild(selectedPiece);
         selectedPiece.classList.remove("selected");
+
+
+        var shouldKing = ((greyTurn && newRow == 1) || (!greyTurn && newRow == 8))
+        if(shouldKing) selectedPiece.classList.add("king-man");
+
         selectedPiece = undefined;
         greyTurn = !greyTurn;
         hidePossibleMoves();
-
     }
 }
 
