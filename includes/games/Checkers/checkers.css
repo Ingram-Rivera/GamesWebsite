@@ -2,7 +2,6 @@ body {
     text-align: center;
 }
 
-
 /* Styling for the checker board */
 #board_container {
     display: inline-block;
@@ -69,4 +68,18 @@ body {
     border-width: 0.1vw;
     color: #255784;
     box-shadow: 0 0 10px #2196F3, 0 0 40px #2196F3, 0 0 80px #2196F3;
+}
+
+.possible {
+    border-style: inset;
+    border-width: 5px;
+    border-color: #2196F3;
+    width: 52.5px;
+    height: 52.5px;
+}
+
+.out-play {
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
 }

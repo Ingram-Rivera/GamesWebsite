@@ -96,7 +96,51 @@ function onClickMan(event) {
 }
 
 function onClickCell(event) {
+    if(selectedPiece == null) return;
 
+    var cellElement = event.target;
+    var cellId = cellElement.getAttribute("id");
+    var cellIdSplit = cellId.split("-");
+    var newRow = parseInt(cellIdSplit[1]);
+    var newColumn = parseInt(cellIdSplit[2]);
+
+    var oldCellId = selectedPiece.parentElement.getAttribute("id");
+    var oldCellIdSplit = oldCellId.split("-");
+    var oldRow = parseInt(oldCellIdSplit[1]);
+    var oldColumn = parseInt(oldCellIdSplit[2]);
+
+    if(isPossibleMove(newRow, newColumn)) {
+        var movementX = (newColumn - oldColumn);
+        var movementY = (newRow - oldRow);
+        if(Math.abs(movementX) == 2 && Math.abs(movementY) == 2) {
+            var enemyCheckX = (movementX < 0 ? -1 : 1);
+            var enemyCheckY = (movementY < 0 ? -1 : 1);
+            enemyCheckX = (oldRow + enemyCheckX);
+            enemyCheckY = (oldRow + enemyCheckY);
+
+            var enemyCellId = ("cell-" + enemyCheckY + "-" + enemyCheckX);
+            var manElement = getMan(enemyCellId);
+            if(isEnemy(manElement)) {
+                manElement.parentElement.removeChild(manElement);
+                if(greyTurn) {
+                    var outPlayBlack = document.getElementById("out-play-black");
+                    outPlayBlack.appendChild(manElement);
+                } else {
+                    var outPlayGrey = document.getElementById("out-play-grey");
+                    outPlayGrey.appendChild(manElement);
+                }
+            }
+        }
+    
+
+        selectedPiece.parentElement.removeChild(selectedPiece);
+        cellElement.appendChild(selectedPiece);
+        selectedPiece.classList.remove("selected");
+        selectedPiece = undefined;
+        greyTurn = !greyTurn;
+        hidePossibleMoves();
+
+    }
 }
 
 function onSelectPiece(element) {
@@ -123,25 +167,80 @@ function showPossibleMoves() {
     var currentRow = parseInt(cellIdSplit[1]);
     var currentColumn = parseInt(cellIdSplit[2]);
 
-    if(greyTurn) {
-        if(isKing(selectedPiece)) {
+    var coordChecks = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+    var enemyChecks = [[-2, -2], [-2, 2], [2, -2], [2, 2]];
+    for(var i = 0; i < coordChecks.length; i++) {
+        var coord = coordChecks[i];
+        var xChange = coord[0];
+        var yChange = coord[1];
 
+        var rowToCheck = (currentRow + yChange);
+        if(rowToCheck < 1 || rowToCheck > 8) continue;
+
+        var columnToCheck = (currentColumn + xChange);
+        if(columnToCheck < 1 || columnToCheck > 8) continue;
+
+        var cellToCheckId = ("cell-" + rowToCheck + "-" + columnToCheck);
+        if(isEnemy(getMan(cellToCheckId))) {
+            var jumpCoord = enemyChecks[i];
+            var xJump = jumpCoord[0];
+            var yJump = jumpCoord[1];
+
+            rowToCheck = (currentRow + yJump);
+            if(rowToCheck < 1 || rowToCheck > 8) continue;
+    
+            columnToCheck = (currentColumn + xJump);
+            if(columnToCheck < 1 || columnToCheck > 8) continue;
+            cellToCheckId = ("cell-" + rowToCheck + "-" + columnToCheck);
         }
 
-        if(currentRow == 6) {
-
+        if(isPossibleMove(rowToCheck, columnToCheck)) {
+            var cellToCheckElement = document.getElementById(cellToCheckId);
+            cellToCheckElement.classList.add("possible");
+            console.log("Moving [" + currentRow + ", " + currentColumn + "] to [" + rowToCheck + ", " + columnToCheck + "] is possible.");
+        } else {
+            console.log("Moving [" + currentRow + ", " + currentColumn + "] to [" + rowToCheck + ", " + columnToCheck + "] is NOT possible!");
         }
-    } else {
-
     }
 }
 
 function hidePossibleMoves() {
+    var possibleMoveList = document.getElementsByClassName("possible");
+    if(possibleMoveList == null) return;
 
+    var elementArray = [];
+    for(var i = 0; i < possibleMoveList.length; i++) {
+        var element = possibleMoveList.item(i);
+        elementArray.push(element);
+    }
+
+    elementArray.forEach(element => {
+        if(element == null) return;
+        element.classList.remove("possible");
+    });
+}
+
+function isPossibleMove(row, column) {
+    if(!isWhite(row, column)) return false;
+    var cellId = selectedPiece.parentElement.getAttribute("id");
+    var cellIdSplit = cellId.split("-");
+    var currentRow = parseInt(cellIdSplit[1]);
+    var currentColumn = parseInt(cellIdSplit[2]);
+
+    var cellToCheckId = ("cell-" + row + "-" + column);
+    if(hasMan(cellToCheckId)) return false;
+
+    if(greyTurn) {
+        if(isKing(selectedPiece)) return true;
+        return (row < currentRow && column != currentColumn);
+    } else {
+        if(isKing(selectedPiece)) return true;
+        return (row > currentRow && column != currentColumn);
+    }
 }
 
 function hasMan(cellId) {
-    var cellElement = document.getElementsById(cellId);
+    var cellElement = document.getElementById(cellId);
     for(var i = 0; i < cellElement.children.length; i++) {
         var child = cellElement.children[i];
         if(child.classList.contains("man")) return true;
@@ -150,7 +249,7 @@ function hasMan(cellId) {
 }
 
 function getMan(cellId) {
-    var cellElement = document.getElementsById(cellId);
+    var cellElement = document.getElementById(cellId);
     for(var i = 0; i < cellElement.children.length; i++) {
         var child = cellElement.children[i];
         if(child.classList.contains("man")) return child;
@@ -159,9 +258,11 @@ function getMan(cellId) {
 }
 
 function isEnemy(manElement) {
+    if(manElement == null) return false;
     return manElement.classList.contains(greyTurn ? "black-man" : "grey-man");
 }
 
 function isKing(manElement) {
+    if(manElement == null) return false;
     return manElement.classList.contains("king-man");
 }
