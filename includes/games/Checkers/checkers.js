@@ -1,3 +1,4 @@
+// Function that creates the board
 function generateBoard() {
     var boardContainer = document.getElementById("board_container");
     for(var row = 1; row <= 8; row++) {
@@ -24,7 +25,9 @@ function generateBoard() {
             }
         }
     }
+
 }
+
 
 // If a number divided by 2 has no remainder, the number is even
 function isEven(number) {
@@ -54,7 +57,7 @@ function generateRow(boardContainer, rowId) {
     boardContainer.appendChild(rowElement);
     return rowElement;
 }
-
+// Function to generate a cell
 function generateCell(rowElement, cellId) {
     var cellElement = document.createElement("div");
     cellElement.setAttribute("id", cellId);
@@ -62,7 +65,7 @@ function generateCell(rowElement, cellId) {
     rowElement.appendChild(cellElement);
     return cellElement;
 }
-
+// Function to click on checkers "man"
 function enableClicking() {
     var manArray = document.getElementsByClassName("man");
     for(var i = 0; i < manArray.length; i++) {
@@ -94,12 +97,17 @@ function onClickMan(event) {
     var currentColumn = parseInt(manCellIdSplit[2]);
     onSelectPiece(manDiv);
 }
-
+// function to select the cell where to more
 function onClickCell(event) {
     if(selectedPiece == null) return;
 
     var cellElement = event.target;
     var cellId = cellElement.getAttribute("id");
+    if(cellId == null) {
+        console.log("Element " + cellElement.parentElement.innerHTML + " has null ID!");
+        return;
+    }
+
     var cellIdSplit = cellId.split("-");
     var newRow = parseInt(cellIdSplit[1]);
     var newColumn = parseInt(cellIdSplit[2]);
@@ -115,13 +123,14 @@ function onClickCell(event) {
         if(Math.abs(movementX) == 2 && Math.abs(movementY) == 2) {
             var enemyCheckX = (movementX < 0 ? -1 : 1);
             var enemyCheckY = (movementY < 0 ? -1 : 1);
-            enemyCheckX = (oldRow + enemyCheckX);
+            enemyCheckX = (oldColumn + enemyCheckX);
             enemyCheckY = (oldRow + enemyCheckY);
 
             var enemyCellId = ("cell-" + enemyCheckY + "-" + enemyCheckX);
             var manElement = getMan(enemyCellId);
             if(isEnemy(manElement)) {
                 manElement.parentElement.removeChild(manElement);
+                console.log("Man '" + enemyCellId + "' should be removed!");
                 if(greyTurn) {
                     var outPlayBlack = document.getElementById("out-play-black");
                     outPlayBlack.appendChild(manElement);
@@ -144,9 +153,10 @@ function onClickCell(event) {
         selectedPiece = undefined;
         greyTurn = !greyTurn;
         hidePossibleMoves();
+        score();
     }
 }
-
+// Funtion for the pieces that are selected
 function onSelectPiece(element) {
     if(selectedPiece != null) {
         var oldSelectedPiece = selectedPiece;
@@ -162,7 +172,7 @@ function onSelectPiece(element) {
     selectedPiece = element;
     showPossibleMoves();
 }
-
+// function to show where to go
 function showPossibleMoves() {
     var cellElement = selectedPiece.parentElement;
     var cellId = cellElement.getAttribute("id");
@@ -250,6 +260,7 @@ function hasMan(cellId) {
         if(child.classList.contains("man")) return true;
     }
     return false;
+    score = score + 1
 }
 
 function getMan(cellId) {
@@ -269,4 +280,20 @@ function isEnemy(manElement) {
 function isKing(manElement) {
     if(manElement == null) return false;
     return manElement.classList.contains("king-man");
+}
+
+function score(){
+    var outPlayGreyElement = document.getElementById("out-play-grey");
+    var outPlayGreyCount = outPlayGreyElement.childElementCount;
+
+    var outPlayBlackElement = document.getElementById("out-play-black");
+    var outPlayBlackCount = outPlayBlackElement.childElementCount;
+
+    var blackScore = (outPlayGreyCount - outPlayBlackCount);
+    var greyScore = (outPlayBlackCount - outPlayGreyCount);
+    var textOutput = ("Grey Score: " +greyScore + " | Black Score: " + blackScore);
+
+    var score = document.getElementById("score");
+    score.innerHTML = textOutput;
+    
 }
