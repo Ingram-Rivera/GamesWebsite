@@ -13,39 +13,39 @@
             </div>
             
             <div class="btn-group">
-                <button>a</button>
-                <button>b</button>
-                <button>c</button>
-                <button>d</button>
-                <button>e</button>
-                <button>f</button>
-                <button>g</button>
-                <button>h</button>
-                <button>i</button>
-                <button>j</button>
-                <button>k</button>
-                <button>l</button>
-                <button>m</button>
-                <button>n</button>
-                <button>o</button>
-                <button>p</button>
-                <button>q</button>
-                <button>r</button>
-                <button>s</button>
-                <button>t</button>
-                <button>u</button>
-                <button>v</button>
-                <button>w</button>
-                <button>x</button>
-                <button>y</button>
-                <button>z</button>
-              </div>
+                <button id="a">a</button>
+                <button id="b">b</button>
+                <button id="c">c</button>
+                <button id="d">d</button>
+                <button id="e">e</button>
+                <button id="f">f</button>
+                <button id="g">g</button>
+                <button id="h">h</button>
+                <button id="i">i</button>
+                <button id="j">j</button>
+                <button id="k">k</button>
+                <button id="l">l</button>
+                <button id="m">m</button>
+                <button id="n">n</button>
+                <button id="o">o</button>
+                <button id="p">p</button>
+                <button id="q">q</button>
+                <button id="r">r</button>
+                <button id="s">s</button>
+                <button id="t">t</button>
+                <button id="u">u</button>
+                <button id="v">v</button>
+                <button id="w">w</button>
+                <button id="x">x</button>
+                <button id="y">y</button>
+                <button id="z">z</button>
+            </div>
 
-              <div class="hint">
+            <div class="hint">
                   <button onClick="displayHint()">
                     Show your hint!
                   </button>
-              </div>
+            </div>
 
             <style>
 
@@ -120,22 +120,317 @@
                 function getRandomInt(max){
                     return Math.floor(Math.random() * Math.floor(max));
                 }
-
+                
                 function hangman(){
                     console.log("Guess a word");
                     word = cities[getRandomInt(cities.length)];
                     console.log(word);
-                    word = word.replace(/[a-z]/g, '_');
+                    /*
+                        While a letter of guess does not match up with each part of word
+                        replace word with _
+                    */
+
                     if(word != null){
                         document.getElementById("test").innerHTML = word;
+                        document.getElementById("test").style.display = 'none';
                     }
-                    /* if(guess = word[i]){
 
-                    } */
+                    document.getElementById('a').onclick = function() {
+                        guess = 'a';
+                        if(word.includes('a')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('b').onclick = function() {
+                        guess = 'b';
+                        if(word.includes('b')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('c').onclick = function() {
+                        guess = 'c';
+                        if(word.includes('c')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('d').onclick = function() {
+                        guess = 'd';
+                        if(word.includes('d')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('e').onclick = function() {
+                        guess = 'e';
+                        if(word.includes('e')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('f').onclick = function() {
+                        guess = 'f';
+                        if(word.includes('f')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('g').onclick = function() {
+                        guess = 'g';
+                        if(word.includes('g')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('h').onclick = function() {
+                        guess = 'h';
+                        if(word.includes('h')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('i').onclick = function() {
+                        guess = 'i';
+                        if(word.includes('i')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('j').onclick = function() {
+                        guess = 'j';
+                        if(word.includes('j')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('k').onclick = function() {
+                        guess = 'k';
+                        if(word.includes('k')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('l').onclick = function() {
+                        guess = 'l';
+                        if(word.includes('l')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('m').onclick = function() {
+                        guess = 'm';
+                        if(word.includes('m')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('n').onclick = function() {
+                        guess = 'n';
+                        if(word.includes('n')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('o').onclick = function() {
+                        guess = 'o';
+                        if(word.includes('o')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('p').onclick = function() {
+                        guess = 'p';
+                        if(word.includes('p')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('q').onclick = function() {
+                        guess = 'q';
+                        if(word.includes('q')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('r').onclick = function() {
+                        guess = 'r';
+                        if(word.includes('r')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('s').onclick = function() {
+                        guess = 's';
+                        if(word.includes('s')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('t').onclick = function() {
+                        guess = 't';
+                        if(word.includes('t')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('u').onclick = function() {
+                        guess = 'u';
+                        if(word.includes('u')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('v').onclick = function() {
+                        guess = 'v';
+                        if(word.includes('v')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('w').onclick = function() {
+                        guess = 'w';
+                        if(word.includes('w')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('x').onclick = function() {
+                        guess = 'x';
+                        if(word.includes('x')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('y').onclick = function() {
+                        guess = 'y';
+                        if(word.includes('y')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+                    document.getElementById('z').onclick = function() {
+                        guess = 'z';
+                        if(word.includes('z')){
+                            alert("You guessed correctly.");
+                        }
+                        else{
+                            alert("You guessed incorrectly.");
+                            lives--;
+                            alert("You have " + lives + " lives remaining.");
+                        }
+                    }
+
+
+                    if(lives == 0){
+                        alert("You lose.");
+                    }
+                    
                 }
 
                 function displayHint(){
-                    alert("Your category is: " );
+                    alert("Your category is: cities." );
                 }
 
             </script>
