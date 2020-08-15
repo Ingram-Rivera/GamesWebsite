@@ -79,7 +79,16 @@ body {
 }
 
 .out-play {
+    display: inline-block;
+    position: center;
+    justify-content: space-evenly;
+    margin: auto;
+}
+.score{
     display: flex;
+    position: top;
+    width: 80px;
+    height: 80px;
     justify-content: space-evenly;
     margin: auto;
 }
