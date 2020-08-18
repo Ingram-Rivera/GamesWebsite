@@ -11,6 +11,10 @@
             <div class="displayWord">
                 <p id="test"></p>
             </div>
+
+            <div class="displayScore">
+                <p id="score"></p>
+            </div>
             
             <div class="btn-group">
                 <button id="a">a</button>
@@ -107,6 +111,10 @@
                     letter-spacing: 10px;
                 }
 
+                #score{
+                    color: white;
+                }
+
             </style>
 
             <script>
@@ -117,10 +125,10 @@
                 var gameState = {
                     lives: 7,
                     targetWord: "",
-                    guess: ""
+                    guess: "",
+                    score: ""
                 }
 
-                
                 document.querySelectorAll(".btn-group button").forEach(button=>{
                         button.onclick = ()=>{
                             tick(button.id);
@@ -130,13 +138,14 @@
                 function getRandomInt(max){
                     return Math.floor(Math.random() * Math.floor(max));
                 }
-                
+
                 function hangman(){
                     console.log("Guess a word");
                     var word = cities[getRandomInt(cities.length)];
                     gameState["lives"] = 7
                     gameState["targetWord"] = word
                     gameState["guess"] = "_".repeat(word.length)
+                    gameState["score"] = 0
                     
                     console.log(word);
                     /*
@@ -152,7 +161,14 @@
                         if(gameState["targetWord"].includes(userLetter)){
                                 var new_guess = []
                                 for(var i = 0; i < gameState["targetWord"].length; i++){
-                                    if(gameState["targetWord"][i] == userLetter) new_guess.push(userLetter)
+                                    if(gameState["targetWord"][i] == userLetter){
+                                        gameState["score"] = gameState["score"] + 1
+                                        console.log(gameState["score"])
+                                        new_guess.push(userLetter)
+                                        if(gameState["score"] == gameState["targetWord"].length){
+                                            alert("You win!");
+                                        }
+                                    }
                                     else new_guess.push(gameState["guess"][i])
                                 }
                                 gameState["guess"] = new_guess.join("")
@@ -167,8 +183,10 @@
                                 alert("You lose.");
                             }
                         }
+                        
                     }
                     document.getElementById("test").innerHTML = gameState["guess"]
+                    document.getElementById("score").innerHTML = "Score: " + gameState["score"]
                 }
 
                 function displayHint(){
