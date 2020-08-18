@@ -44,6 +44,9 @@ function hit() {
 
     if(playerCardValues > 21) {
         alert("You have busted, gg.");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
         return;
     }
 
@@ -54,11 +57,17 @@ function hit() {
 
     if(playerCardValues == dealerCardValues) {
         alert("You have tied with the dealer!");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
         return;
     }
 
     if(dealerCardValues < playerCardValues) {
         alert("You win, gg!");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
     }
 }
 
@@ -71,6 +80,9 @@ function dealerHit() {
         updateDisplay();
         if(cardValue(dealerCards) > 21) {
             alert("The dealer has busted, gg!");
+            let game_id = 1; // blackjack
+            let score = parseInt( document.getElementById('playerCards').innerHTML );
+            scorePush(game_id,score);
             break;
         }
     }
@@ -85,15 +97,24 @@ function stand() {
 
     if(dealerCardValues == playerCardValues) {
         alert("You have tied with the dealer!");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
         return;
     }
 
     if(dealerCardValues < playerCardValues) {
         alert("You win, gg!");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
     }
 
     if(playerCardValues < dealerCardValues){
         alert("The dealer has won, gg!");
+        let game_id = 1; // blackjack
+        let score = parseInt( document.getElementById('playerCards').innerHTML );
+        scorePush(game_id,score);
     }
     updateDisplay();
 }
