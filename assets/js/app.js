@@ -37,7 +37,7 @@ function getSource(gameName) {
         case "hangman": return (baseUrl + "hangman/index.html");
         case "minesweeper": return (baseUrl + "minesweeper/index.html");
         case "space_invaders": return (baseUrl + "space_invaders/space_invaders.html");
-		case "tetris": return (baseUrl + "tetris/tetris.html");
+	    case "tetris": return (baseUrl + "tetris/tetris.html");
     }
 
     return null;
