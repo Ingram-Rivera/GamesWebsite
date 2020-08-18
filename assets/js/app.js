@@ -14,39 +14,32 @@ function getCookie(cname) {
     return "";
 }
 
-function load_game(game_name) {
-    if (game_name === 'blackjack') {
-        $("#game_loads_here").empty();
-        var customFrame = document.createElement("iframe");
-        customFrame.setAttribute("src", "/includes/games/blackjack/blackjack.html");
-        customFrame.setAttribute("style", "overflow: hidden; width: 100%; height: 100%;");
-        customFrame.setAttribute("scrolling", "no");
-        document.getElementById("game_loads_here").appendChild(customFrame);
+function load_game(gameName) {
+    var gameSource = getSource(gameName);
+    if(gameSource == null) return;
+    $("#game_loads_here").empty();
+
+    var customFrame = document.createElement("iframe");
+    customFrame.setAttribute("src", gameSource);
+    customFrame.setAttribute("style", "overflow: hidden; width: 100%; height: 100%;");
+    customFrame.setAttribute("scrolling", "no");
+    
+    var gameLoadDiv = document.getElementById("game_loads_here");
+    gameLoadDiv.appendChild(customFrame);
+}
+
+function getSource(gameName) {
+    var baseUrl = "/includes/games/";
+    switch(gameName) {
+        case "2048": return (baseUrl + "2048/index.html");
+        case "blackjack": return (baseUrl + "blackjack/blackjack.html");
+        case "checkers": return (baseUrl + "checkers/checkers.html");
+        case "hangman": return (baseUrl + "hangman/index.html");
+        case "minesweeper": return (baseUrl + "minesweeper/index.html");
+        case "space_invaders": return (baseUrl + "space_invaders/space_invaders.html");
     }
-    if (game_name === 'minesweeper') {
-        $("#game_loads_here").empty();
-        var customFrame = document.createElement("iframe");
-        customFrame.setAttribute("src", "/includes/games/minesweeper/index.html");
-        customFrame.setAttribute("style", "overflow: hidden; width: 100%; height: 100%;");
-        customFrame.setAttribute("scrolling", "no");
-        document.getElementById("game_loads_here").appendChild(customFrame);
-    }
-    if (game_name === '2048') {
-        $("#game_loads_here").empty();
-        var customFrame = document.createElement("iframe");
-        customFrame.setAttribute("src", "/includes/games/2048/index.html");
-        customFrame.setAttribute("style", "overflow: hidden; width: 100%; height: 100%;");
-        customFrame.setAttribute("scrolling", "no");
-        document.getElementById("game_loads_here").appendChild(customFrame);
-    }
-    if (game_name === 'space_invaders') {
-        $("#game_loads_here").empty();
-        var customFrame = document.createElement("iframe");
-        customFrame.setAttribute("src", "/includes/games/space_invaders/space_invaders.html");
-        customFrame.setAttribute("style", "overflow: hidden; width: 100%; height: 100%;");
-        customFrame.setAttribute("scrolling", "no");
-        document.getElementById("game_loads_here").appendChild(customFrame);
-    }
+
+    return null;
 }
 
 function startToggleInit() {
