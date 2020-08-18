@@ -204,11 +204,52 @@ document.addEventListener('DOMContentLoaded', () => {
     //game over
     function gameOver() {
         if (current.some(index => block[defaultRotation + index].classList.contains('item3'))) {
-            console.log(score);
+            console.log(Score);
             scoreShow.innerHTML = 'Game Over!';
-            console.log(score);
+            console.log(Score);
             clearInterval(setTime);
+            submitScore();
         }
+    }
+
+    function getCookie(cookieName) {
+        var name = (cookieName + "=");
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(";");
+
+        for(var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while(cookie.charAt(0) == ' ') {
+                cookie = cookie.substring(1);
+            }
+
+            if(cookie.indexOf(name) == 0) {
+                return cookie.substring(name.length, cookie.length);
+            }
+        }
+
+        return "";
+    }
+
+    function submitScore() {
+        var playerName = getCookie("player");
+        var gameId = 7;
+        $.ajax({
+            type: "POST",
+            url: "/includes/submit_score.php",
+            data: ("username=" + playerName + "&game_id=" + gameId + "&score=" + Score),
+            success: onScoreSubmitSuccess,
+            failure: onScoreSubmitFailure
+        });
+    }
+
+    function onScoreSubmitSuccess(data) {
+        alert("Your score was successfully sent!");
+        location.reload();
+    }
+
+    function onScoreSubmitFailure(data) {
+        alert("Score Push Failure\n\nPlease send the following error to the site administrator:\n\n" + data);
     }
 })
 // to work with each piece, change the array selection from random to the selection of piece you want to work with

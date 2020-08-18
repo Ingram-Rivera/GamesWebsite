@@ -297,7 +297,7 @@ function score(){
     score.innerHTML = textOutput;
 
     if (greyScore == 8 || blackScore == 8){
-        let game_id = 4; // checkers
+        let game_id = 5; // checkers
         let score = parseInt( document.getElementById('greyScore').innerHTML );
         scorePush(game_id,score);
     }
