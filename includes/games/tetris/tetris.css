@@ -2,18 +2,23 @@
     display:flex;
 }
 
-.grid div {
+.grid div{
+    
+    
     height: 20px;
     width: 20px;
 }
 
 .grid {
-    background-color: rgb(255, 0, 13);
+    opacity: .6;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: rgba(130, 101, 235, 0.596);
     height: 400px;
     width: 200px;
     display: flex;
     flex-wrap: wrap;
-
+    float: left;
 }
 
 .previous-grid {
@@ -29,7 +34,8 @@
 }
 
 .item {
-    background-color: blue;
+    opacity:.9;
+    background-color: rgb(175, 159, 204);
 }
 
 .item2 {
@@ -37,20 +43,94 @@
 }
 
 .item3 {
-    background-color: rgb(2, 59, 124);
+    opacity: .9;
+    background-color: rgb(61, 0, 80);
 }
 
 .mini-grid {
+    opacity: .4;
+    margin: auto;
     margin-left: 50px;
     width: 80px;
     height: 80px;
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(0, 255, 255);
-
+    float: left;
+    background-color: rgb(175, 159, 204);
 }
 
 .mini-grid div {
     height: 20px;
     width: 20px;
+}
+
+.center {
+    background-image: url("https://wallpaperaccess.com/full/923586.jpg");
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    border: 3px solid #6037d3;
+    padding: 20px;
+}
+
+body {
+    
+    background-color: lightslategray;
+}
+
+h1 {
+    text-shadow: 2px 2px  rgb(129, 20, 218);
+    background-color: rgb(0, 60, 255);
+    opacity: .7;
+}
+
+h2 {
+    background-color: blue;
+}
+
+button {
+    background-image: url("https://wallpaperaccess.com/full/923586.jpg");
+    opacity: .4;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    margin: auto;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: white; 
+    color: white;
+    border: 2px solid rgb(175, 159, 204);
+}
+  
+
+.mini-grid2 {
+    text-emphasis: white;
+    opacity: .4;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+    display: block;
+    float: left;
+    background-color: rgb(175, 159, 204);
+}
+
+.mini-grid2 div {
+    height: 20px;
+    width: 20px;
+}
+
+.center2 {
+    background-image: url("https://wallpaperaccess.com/full/923586.jpg");
+    justify-content: center;
+    margin: auto;
+    width: 40%;
+    border: 3px solid #6037d3;
+    padding: 20px;
 }

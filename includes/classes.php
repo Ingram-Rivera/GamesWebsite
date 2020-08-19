@@ -30,10 +30,19 @@ class Games {
     private $scores;
 
     // methods
-    function load_game($game_name) {}
-    function play_game($game_name) {}
-    function record_score($game_name) {}
-    function quit_game($game_name) {}
+    public function displayScores() {
+        $db = new Database();
+        $sql="SELECT id_scores, user_id, game_id, score,id_games, game_name, id_gamer, gamer_name 
+           FROM `uat_game_app`.`scores`
+           INNER JOIN `uat_game_app`.`games`
+           ON `uat_game_app`.`scores`.game_id = `uat_game_app`.`games`.id_games
+           INNER JOIN `uat_game_app`.`gamer`
+           ON `uat_game_app`.`scores`.user_id = `uat_game_app`.`gamer`.id_gamer";
+        $query=$db->query($sql);
+        $results=$query->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $results;
+    }
 }
 
 class Scores {
