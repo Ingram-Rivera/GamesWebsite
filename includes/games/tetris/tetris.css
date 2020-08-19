@@ -11,13 +11,13 @@
 
 .grid {
     opacity: .6;
-    margin: auto;
+    margin-left: 5px;
     background-color: rgba(130, 101, 235, 0.596);
     height: 400px;
     width: 200px;
     display: flex;
     flex-wrap: wrap;
-
+    float: left;
 }
 
 .previous-grid {
@@ -52,10 +52,9 @@
     margin-left: 50px;
     width: 80px;
     height: 80px;
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    float: left;
     background-color: rgb(175, 159, 204);
-
 }
 
 .mini-grid div {
@@ -65,12 +64,11 @@
 
 .center {
     background-image: url("https://wallpaperaccess.com/full/923586.jpg");
-    
     justify-content: center;
     margin: auto;
-    width: 40%;
-  border: 3px solid #6037d3;
-  padding: 20px;
+    width: 50%;
+    border: 3px solid #6037d3;
+    padding: 20px;
 }
 
 body {
@@ -96,7 +94,7 @@ button {
     padding: 16px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 20px;
     margin: auto;
     transition-duration: 0.4s;
@@ -111,16 +109,13 @@ button:hover {
   
 
 .mini-grid2 {
-      text-emphasis: white;
-    position: absolute;
-    right: 610px;
-    top: 600px;
+    text-emphasis: white;
     opacity: .4;
     margin: auto;
     width: 80px;
     height: 80px;
     display: block;
-    flex-wrap: wrap;
+    float: left;
     background-color: rgb(175, 159, 204);
 }
 
