@@ -12,6 +12,7 @@
 .grid {
     opacity: .6;
     margin-left: 5px;
+    margin-right: 5px;
     background-color: rgba(130, 101, 235, 0.596);
     height: 400px;
     width: 200px;
@@ -52,7 +53,8 @@
     margin-left: 50px;
     width: 80px;
     height: 80px;
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
     float: left;
     background-color: rgb(175, 159, 204);
 }
