@@ -5,7 +5,7 @@ class Database extends PDO
     private $host   = 'localhost:3306';
     private $user   = 'root';
     private $pass   = 'root';
-    private $dbname = 'uat_game_app';
+    private $dbname = 'games';
 
     public function __construct($dsn = null, $user = null, $pass = null, $opts = null)
     {

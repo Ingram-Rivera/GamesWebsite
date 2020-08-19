@@ -11,7 +11,7 @@ class Gamer {
     }
 
     public function create($username) {
-        $sql = "INSERT INTO `uat_game_app`.`gamer` (`gamer_name`) VALUES (:username)";
+        $sql = "INSERT INTO `gamer` (`gamer_name`) VALUES (:username)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
@@ -33,11 +33,11 @@ class Games {
     public function displayScores() {
         $db = new Database();
         $sql="SELECT id_scores, user_id, game_id, score,id_games, game_name, id_gamer, gamer_name 
-           FROM `uat_game_app`.`scores`
-           INNER JOIN `uat_game_app`.`games`
-           ON `uat_game_app`.`scores`.game_id = `uat_game_app`.`games`.id_games
-           INNER JOIN `uat_game_app`.`gamer`
-           ON `uat_game_app`.`scores`.user_id = `uat_game_app`.`gamer`.id_gamer";
+           FROM `scores`
+           INNER JOIN `games`
+           ON `scores`.game_id = `games`.id_games
+           INNER JOIN `gamer`
+           ON `scores`.user_id = `gamer`.id_gamer";
         $query=$db->query($sql);
         $results=$query->fetchAll(PDO::FETCH_OBJ);
         $db = null;
@@ -53,7 +53,7 @@ class Scores {
 
     public function selectUser($username) {
         $db = new Database();
-        $sql="select id_gamer, gamer_name, gamer_secret from `uat_game_app`.`gamer` where gamer_name = '" . $username . "'";
+        $sql="select id_gamer, gamer_name, gamer_secret from `gamer` where gamer_name = '" . $username . "'";
         $query=$db->query($sql);
         $query->execute();
         $results=$query->fetchAll(PDO::FETCH_OBJ);

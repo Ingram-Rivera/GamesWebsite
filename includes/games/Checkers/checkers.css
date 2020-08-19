@@ -2,14 +2,15 @@ body {
     text-align: center;
     background-color: slategray;
 }
+
 h1{
     text-align: center;
-    font-size: 70px;
+    font-size: 20px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color:#011e3b;
-    text-transform: uppercase;
-    
+    text-transform: uppercase;    
 }
+
 .rules{
     display:inline-block;
     position: absolute;
@@ -33,14 +34,14 @@ h1{
     border-color: grey;
     border-style: solid;
     border-width: 5px;
-    background-image: url("Img/wood-background.jpg");
+    background-image: url("img/wood-background.jpg");
 }
 
 /* Styling for the rows on the board */
 .row {
     display: flex;
     justify-content: space-evenly;
-    width: 500px;
+    width: 400px;
 
     border-color: black;
     border-style: solid;
@@ -49,8 +50,8 @@ h1{
 
 /* Styling for the cells on the board */
 .cell {
-    width: 62.5px;
-    height: 62.5px;
+    width: 50px;
+    height: 50px;
     display: inline-block;
     margin: 0;
 }
@@ -68,20 +69,20 @@ h1{
     
     margin: 6.25px;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 80%;
+    height: 80%;
 }
 
 .black-man {
     background-color: black;
-    background-image: url("Img/black metal.png");
+    background-image: url("img/black metal.png");
     background-position: center;
     
 }
 
 .grey-man {
     background-color: grey;
-    background-image: url("Img/grey metal.png");
+    background-image: url("img/grey metal.png");
 }
 
 .king-man {
@@ -102,8 +103,8 @@ h1{
     border-style: inset;
     border-width: 5px;
     border-color: #2196F3;
-    width: 52.5px;
-    height: 52.5px;
+    width: 40px;
+    height: 40px;
 }
 
 .out-play {
