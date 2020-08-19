@@ -207,27 +207,28 @@ StartBtn.addEventListener('click', ()=> {
         showShape()
     }
 })
-const scoreShow = document.querySelector('#score')
-// add score
-function addScore(){
-for(let i = 0; i < 199; i +=w){
-    const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
-    
-    if(row.every(index=> block[index].classList.contains('item3'))) {
-        Score +=10
-        scoreShow.innerHTML = Score
-        row.forEach(index => {
-            block[index].classList.remove('item3')
-            block[index].classList.remove('item')
-            
-        })
-        const blockRemoved = block.splice(i, w)
-        block = blockRemoved.concat(block)
-        block.forEach(cell => grid.appendChild(cell))
-        }
-     }
 
+const scoreShow = document.querySelector('#score')
+
+// add score
+function addScore() {
+    for(let i = 0; i < 199; i +=w) {
+        const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+        
+        if(row.every(index=> block[index].classList.contains('item3'))) {
+            Score +=10
+            scoreShow.innerHTML = Score
+            row.forEach(index => {
+                block[index].classList.remove('item3')
+                block[index].classList.remove('item')
+                
+            })
+            const blockRemoved = block.splice(i, w)
+            block = blockRemoved.concat(block)
+            block.forEach(cell => grid.appendChild(cell))
+        }
     }
+}
 
 //game over
 function gameOver(){
@@ -237,17 +238,50 @@ function gameOver(){
         scoreShow.innerHTML = Score
         console.log(score)
         clearInterval(setTime)
-
+        submitScore();
     }
 }
 
+function getCookie(cookieName) {
+    var name = (cookieName + "=");
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieArray = decodedCookie.split(";");
 
+    for(var i = 0; i < cookieArray.length; i++) {
+        var cookie = cookieArray[i];
+        while(cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1);
+        }
 
+        if(cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
 
+    return "";
+}
 
+function submitScore() {
+    var playerName = getCookie("player");
+    var gameId = 7;
+    $.ajax({
+        type: "POST",
+        url: "/includes/submit_score.php",
+        data: ("username=" + playerName + "&game_id=" + gameId + "&score=" + Score),
+        success: onScoreSubmitSuccess,
+        failure: onScoreSubmitFailure
+    });
+}
 
+function onScoreSubmitSuccess(data) {
+    alert("Your score was successfully sent!");
+    location.reload();
+}
 
+function onScoreSubmitFailure(data) {
+    alert("Score Push Failure\n\nPlease send the following error to the site administrator:\n\n" + data);
+}
 
-})
+});
 // to work with each piece, change the array selection from random to the selection of piece you want to work with
 // The numbers are from 1 -4. The lines to change are 69, 121, 160. Then you can work with the selected piece.
