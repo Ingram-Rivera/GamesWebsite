@@ -1,6 +1,6 @@
 # GamesWebsite
 A custom game website made with a team  
-[Website Link](https://games.ingram-rivera.xyz/)
+[Website Link](http://mini-gameswebpage.xyz/)
 
 ## Team Members
 - Joriel Rivas
