@@ -1,0 +1,26 @@
+body {
+    background-color: #888888;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+table, thead, tbody, tr, th, td {
+    border-width: 1px;
+    border-color: black;
+    border-collapse: collapse;
+    border-style: solid;
+
+    text-align: center;
+}
+
+th, td {
+    padding: 5px;
+}

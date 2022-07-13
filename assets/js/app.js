@@ -55,6 +55,7 @@ function startToggle() {
     document.getElementById('choose_game').style.display = 'none';
     document.getElementById('game_selection').style.display = 'none';
     document.getElementById('quit_game').style.display = 'block';
+    document.getElementById('show_scores').style.display = 'block';
 }
 
 function quit_game() {
@@ -65,10 +66,16 @@ function quit_game() {
     customImage.setAttribute("style", "width: 100%; height: 100%;");
     document.getElementById("game_loads_here").appendChild(customImage);
 }
+
 function quitToggle() {
     document.getElementById('quit_game').style.display = 'none';
+    document.getElementById('show_scores').style.display = 'none';
     document.getElementById('choose_game').style.display = 'inline-block';
     document.getElementById('game_selection').style.display = 'block';
+}
+
+function show_scores() {
+    window.open("/includes/display_scores.php", "_blank");
 }
 
 // form action

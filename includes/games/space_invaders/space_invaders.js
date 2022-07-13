@@ -39,11 +39,14 @@ var enemyPositions = [];
 var enemyBulletPositions = [];
 var nextEnemyBulletCooldown = 0;
 
+drawText(125, 250, "Click 'Play'", "#FFFFFF", "48px sans-serif");
+
 function startGame() {
-    if(isStarted) return;
+    if(isStarted) {
+        return;
+    }
+
     isStarted = true;
-    
-    alert("Space Invaders is currently a work in progress!");
     hideElement("playButton");
     showElement("information");
     
@@ -159,6 +162,8 @@ function drawText(x, y, text, color, font) {
     var canvas = getCanvas();
     canvas.fillStyle = color;
     canvas.font = font;
+    canvas.textAlign = "start";
+    canvas.textBaseLine = "bottom";
     canvas.fillText(text, x, y);
 }
 
@@ -397,6 +402,10 @@ function triggerRandomEnemyWeapon() {
 
     var enemyIndex = getRandomInteger(0, enemyPositions.length);
     var enemyPosition = enemyPositions[enemyIndex];
+    if(enemyPosition == null) {
+        return;
+    }
+    
     enemyBulletPositions.push([enemyPosition[0], enemyPosition[1]]);
     enemyBulletCooldown += ((ticksPerSecond * 2) / enemySpeed);
 }
@@ -404,50 +413,12 @@ function triggerRandomEnemyWeapon() {
 function gameOver() {
     clearInterval(gameTaskId);
     drawRectangle(0, 0, gameWidth, gameHeight, "#000000");
-    drawText(0, 0, "Game Over", "#FFFFFF", "48px sans-serif");
-    
-    hideElement("spaceInvaders");
+    drawText(125, 250, "Game Over", "#FFFFFF", "48px sans-serif");
+
     showElement("submitButton");
-    
     alert("Game Over!");
 }
 
-function getCookie(cookieName) {
-    var name = (cookieName + "=");
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var cookieArray = decodedCookie.split(";");
-
-    for(var i = 0; i < cookieArray.length; i++) {
-        var cookie = cookieArray[i];
-        while(cookie.charAt(0) == ' ') {
-            cookie = cookie.substring(1);
-        }
-
-        if(cookie.indexOf(name) == 0) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-
-    return "";
-}
-
 function submitScoreButton() {
-    var playerName = getCookie("player");
-    var gameId = 4;
-    $.ajax({
-        type: "POST",
-        url: "/includes/submit_score.php",
-        data: ("username=" + playerName + "&game_id=" + gameId + "&score=" + currentScore),
-        success: onScoreSubmitSuccess,
-        failure: onScoreSubmitFailure
-    });
-}
-
-function onScoreSubmitSuccess(data) {
-    alert("Your score was successfully sent!");
-    location.reload();
-}
-
-function onScoreSubmitFailure(data) {
-    alert("Score Push Failure\n\nPlease send the following error to the site administrator:\n\n" + data);
+    scorePush(4, currentScore);
 }
