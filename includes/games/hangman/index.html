@@ -1,7 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        
+        <link rel="stylesheet" type="text/css" href="index.css"/>
+
+        <script type="text/javascript" src="/assets/js/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="/includes/score-submit.js"></script>
+        <script type="text/javascript" src="index.js" defer></script>
+    </head>
+
     <body>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <div class="GameStart">
             <button onclick="hangman()">Play hangman!</button>
         </div>
@@ -44,185 +53,5 @@
                 Show your hint!
             </button>
         </div>
-        <style>
-            body {
-                background-color: rgb(73, 73, 73);
-            }
-
-            .displayWord {
-                color: white;
-            }
-
-            .btn-group button {
-                background-color: #4CAF50;
-                border: 1px solid green;
-                color: white;
-                padding: 10px 24px;
-                cursor: pointer;
-                float: left;
-            }
-
-            .btn-group:after {
-                content: "";
-                clear: both;
-                display: table;
-            }
-
-            .btn-group button:not(:last-child) {
-                border-right: none;
-            }
-
-            .btn-group button:hover {
-                background-color: #3e8e41;
-            }
-
-            .hint button {
-                background-color: blue;
-                color: white;
-                cursor: pointer;
-            }
-
-            .hint button:hover {
-                background-color: rgb(1, 87, 138);
-                color: white;
-            }
-
-            .GameStart button {
-                background-color: rgb(185, 0, 0);
-                color: white;
-                cursor: pointer;
-            }
-
-            .GameStart button:hover {
-                background-color: rgb(109, 0, 0);
-                color: white;
-            }
-
-            #test {
-                font-size: 25px;
-                letter-spacing: 10px;
-            }
-
-            #score {
-                color: white;
-            }
-        </style>
-        <script>
-            var cities = ["phoenix", "austin", "seattle", "orlando", "boston", "jackson", "salem", "montgomery", "springfield", "albany", "raleigh", "madison", "nashville", "lincoln"];
-            var categories;
-
-            var gameState = {
-                lives: 7,
-                targetWord: "",
-                guess: "",
-                score: ""
-            }
-
-            document.querySelectorAll(".btn-group button").forEach(button => {
-                button.onclick = () => {
-                    tick(button.id);
-                }
-            })
-
-            function getRandomInt(max) {
-                return Math.floor(Math.random() * Math.floor(max));
-            }
-
-            function hangman() {
-                console.log("Guess a word");
-                var word = cities[getRandomInt(cities.length)];
-                gameState["lives"] = 7
-                gameState["targetWord"] = word
-                gameState["guess"] = "_".repeat(word.length)
-                gameState["score"] = 0
-
-                console.log(word);
-                /*
-                    While a letter of guess does not match up with each part of word
-                    replace word with _
-                */
-
-                tick()
-            }
-
-            function tick(userLetter) {
-                if (userLetter) {
-                    if (gameState["targetWord"].includes(userLetter)) {
-                        var new_guess = []
-                        for (var i = 0; i < gameState["targetWord"].length; i++) {
-                            if (gameState["targetWord"][i] == userLetter) {
-                                gameState["score"] = gameState["score"] + 1
-                                console.log(gameState["score"])
-                                new_guess.push(userLetter)
-                                if (gameState["score"] == gameState["targetWord"].length) {
-                                    alert("You win!");
-                                    submitScore();
-                                }
-                            }
-                            else new_guess.push(gameState["guess"][i])
-                        }
-                        gameState["guess"] = new_guess.join("")
-
-                        alert("You guessed correctly.");
-                    }
-                    else {
-                        alert("You guessed incorrectly.");
-                        gameState["lives"]--;
-                        alert("You have " + gameState["lives"] + " lives remaining.");
-                        if (gameState["lives"] < 1) {
-                            alert("You lose.");
-                            submitScore();
-                        }
-                    }
-
-                }
-                document.getElementById("test").innerHTML = gameState["guess"]
-                document.getElementById("score").innerHTML = "Score: " + gameState["score"]
-            }
-
-            function displayHint() {
-                alert("Your category is: cities.");
-            }
-
-            function getCookie(cookieName) {
-                var name = (cookieName + "=");
-                var decodedCookie = decodeURIComponent(document.cookie);
-                var cookieArray = decodedCookie.split(";");
-
-                for(var i = 0; i < cookieArray.length; i++) {
-                    var cookie = cookieArray[i];
-                    while(cookie.charAt(0) == ' ') {
-                        cookie = cookie.substring(1);
-                    }
-
-                    if(cookie.indexOf(name) == 0) {
-                        return cookie.substring(name.length, cookie.length);
-                    }
-                }
-
-                return "";
-            }
-
-            function submitScore() {
-                var playerName = getCookie("player");
-                var gameId = 6;
-                $.ajax({
-                    type: "POST",
-                    url: "/includes/submit_score.php",
-                    data: ("username=" + playerName + "&game_id=" + gameId + "&score=" + gameState["score"]),
-                    success: onScoreSubmitSuccess,
-                    failure: onScoreSubmitFailure
-                });
-            }
-
-            function onScoreSubmitSuccess(data) {
-                alert("Your score was successfully sent!");
-                location.reload();
-            }
-
-            function onScoreSubmitFailure(data) {
-                alert("Score Push Failure\n\nPlease send the following error to the site administrator:\n\n" + data);
-            }
-        </script>
     </body>
 </html>

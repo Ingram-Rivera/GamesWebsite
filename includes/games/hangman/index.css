@@ -1,0 +1,61 @@
+body {
+    background-color: rgb(73, 73, 73);
+}
+
+.displayWord {
+    color: white;
+}
+
+.btn-group button {
+    background-color: #4CAF50;
+    border: 1px solid green;
+    color: white;
+    padding: 10px 24px;
+    cursor: pointer;
+    float: left;
+}
+
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none;
+}
+
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
+.hint button {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+.hint button:hover {
+    background-color: rgb(1, 87, 138);
+    color: white;
+}
+
+.GameStart button {
+    background-color: rgb(185, 0, 0);
+    color: white;
+    cursor: pointer;
+}
+
+.GameStart button:hover {
+    background-color: rgb(109, 0, 0);
+    color: white;
+}
+
+#test {
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+#score {
+    color: white;
+}

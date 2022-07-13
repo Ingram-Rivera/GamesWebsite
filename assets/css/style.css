@@ -26,7 +26,12 @@ h1 {
 }
 
 #quit_game {
-	margin-top: 2em; cursor: pointer;
+	margin-top: 2em; 
+	cursor: pointer;
+}
+
+#show_scores {
+	cursor: pointer;
 }
 
 .col-4 {

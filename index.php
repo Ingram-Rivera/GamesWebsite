@@ -1,15 +1,15 @@
 <?php
-	// https://games.ingram-rivera.xyz/
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-
+	// http://mini-gameswebpage.xyz/
 	require_once 'includes/db_conn.php';
 	require_once 'includes/classes.php';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 		<title>UAT Multi-Game App</title>
 	</head>
 	<body class="container">
@@ -23,6 +23,7 @@
 		<div id="game_choice" class="text-center">
 			<h2 id="choose_game" style="display:none;">Choose a Game</h2>
 			<h2 id="quit_game" onclick="quit_game(); quitToggle();" style="display:none;">Quit Game</h2>
+			<h2 id="show_scores" onclick="show_scores();" style="display: none;">Show Scores</h2>
 			<div id="game_selection" class="row" style="display:none;">
 				<div class="col-4">
 					<h3 class="game" onclick="load_game('blackjack'); startToggle();">Black Jack</h3>

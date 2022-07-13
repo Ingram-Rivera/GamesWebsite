@@ -18,7 +18,7 @@ class Database extends PDO
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
-    public function query($query)
+    public function query($query, $fetchMode = null, ...$fetchModeArgs)
     {
       $result = parent::query($query);
       // do other stuff you want to do here, then...
